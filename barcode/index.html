@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head></head>
+
+<body>
+  <img id="barcode" src="./img/1.png"></img>
+</body>
+<script type="module">
+  const imageElement = document.getElementById('barcode');
+
+  // check supported types
+  const supportedFormats = await BarcodeDetector.getSupportedFormats();
+  supportedFormats.forEach(format => console.log(format));
+
+  // check compatibility
+  if (!('BarcodeDetector' in window)) {
+    console.log('Barcode Detector is not supported by this browser.');
+  } else {
+    console.log('Barcode Detector supported!');
+
+    // create new detector
+    const barcodeDetector = new BarcodeDetector({ formats: ['code_39', 'codabar', 'ean_13'] });
+
+    const barcodes = await barcodeDetector.detect(imageElement);
+    barcodes.forEach(barcode => console.log(barcode));
+  }
+</script>
+
+</html>
